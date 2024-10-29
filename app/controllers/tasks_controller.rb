@@ -4,6 +4,7 @@ class TasksController < ApplicationController
   # GET /tasks or /tasks.json
   def index
     @tasks = Task.all
+    @tasks_map = @tasks.select(:task_id, :title, :status, :priority).index_by(&:task_id) # Converts to a hash
   end
 
   # GET /tasks/1 or /tasks/1.json

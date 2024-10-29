@@ -1,14 +1,22 @@
 import { Controller } from "@hotwired/stimulus"
 import React from 'react'
 import { createRoot } from 'react-dom/client';
-import App from '../components/app'
+import Tasks from '../components/tasks'
 
 // Connects to data-controller="tasks"
 export default class extends Controller {
+
+  static values = { map: Object };
+
   connect() {
         //this.element.textContent = "Hello World!"
         console.log("tasks: Hello World!");
         const app = document.getElementById('app');
-        createRoot(app).render(<App />);    
+
+        // Convert map to array if necessary
+        const tasksArray = Object.values(this.mapValue);
+
+        //pass the tasks to React Tasks component
+        createRoot(app).render(<Tasks tasks={tasksArray} />); 
   }
 }
