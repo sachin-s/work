@@ -9,11 +9,24 @@ import {
   TableRow,
 } from "./table"
 
+import {Card,CardHeader, CardContent } from "./card"
+import { Button } from "./button"
+
 function Tasks({tasks}) {
   return (
-    <div>
+    <Card className="m-20">
+      <CardHeader>
+        <div className='flex justify-between'>
+          <div>Tasks</div>
+          <div>
+            <Button className='mr-3'>New task</Button>
+            <Button variant="outline">Columns</Button>
+          </div>
+        </div>  
+      </CardHeader>
+      <CardContent>
     <Table>
-      <TableCaption>A list of tasks.</TableCaption>
+      <TableCaption>List of tasks.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[120px]">Task</TableHead>
@@ -33,7 +46,8 @@ function Tasks({tasks}) {
             ))}
       </TableBody>
     </Table>
-    </div>
+    </CardContent>
+    </Card>
 
   )
 }

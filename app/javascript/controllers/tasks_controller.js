@@ -6,11 +6,12 @@ import Tasks from '../components/tasks'
 // Connects to data-controller="tasks"
 export default class extends Controller {
 
-  static values = { map: Object };
+  static values = { map: Object, newTaskUrl: String };
 
   connect() {
         //this.element.textContent = "Hello World!"
-        console.log("tasks: Hello World!");
+        console.debug("tasks: Hello World!");
+        console.debug(this.newTaskUrlValue);
         const app = document.getElementById('app');
 
         // Convert map to array if necessary
