@@ -74,8 +74,15 @@
   * {
     @apply border-border;
   }
+  @font-face {
+    font-family: 'Geist';
+    src: font-url('Geist-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: 'Geist', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;    
   }
 }

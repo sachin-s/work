@@ -1,0 +1,1 @@
+Mime::Type.register "font/ttf", :ttf
