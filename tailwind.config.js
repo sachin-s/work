@@ -62,7 +62,7 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)",'Geist', ...fontFamily.sans],
+        sans: ["Geist","var(--font-sans)", ...fontFamily.sans],
       },
       keyframes: {
         "accordion-down": {

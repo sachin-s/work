@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets --loader:.ttf=file --loader:.js=jsx",
-    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.scss -o ./app/assets/builds/application.scss --minify && sass ./app/assets/builds/application.scss ./app/assets/builds/application.css --style=compressed"
+    "build:css": "tailwindcss -i ./app/assets/scss/application.tailwind.scss -o ./app/assets/scss/admin.scss --minify && sass ./app/assets/scss/admin.scss ./app/assets/stylesheets/application.css --style=compressed"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
