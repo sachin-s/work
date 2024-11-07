@@ -6,7 +6,7 @@ const cssnano = require('cssnano');
 const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process'); // Added missing exec import
-const { copy } = require('esbuild-plugin-copy').default; // Plugin to copy assets
+const { copy } = require('esbuild-plugin-copy');
 
 // Helper function to execute shell commands
 const runCommand = (command, description) => {
@@ -35,9 +35,9 @@ const build = async () => {
 
         // Run CSS bundling with Sass and PostCSS (equivalent to yarn build:css)
         await esbuild.build({
-            entryPoints: ['app/javascript/styles/tailwind.scss'], // Entry for Sass
+            entryPoints: ['app/javascript/styles/tailwind2.scss'], // Entry for Sass
             bundle: true,
-            outdir: 'app/assets/builds',
+            outdir: 'app/javascript/styles',
             loader: {
                 '.scss': 'css',
                 '.ttf': 'file',  // Add loader for .ttf files to be copied
@@ -49,18 +49,17 @@ const build = async () => {
                         autoprefixer(),
                         cssnano(), // Minify CSS
                     ],
-                }),
+                })/*,
                 copy({
                     // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
                     // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
-                    resolveFrom: 'cwd',
                     assets: {
-                      from: [path.resolve(__dirname, 'app/assets/fonts/*')],
-                      to: [path.resolve(__dirname, 'app/assets/builds/')],
+                        //from: [path.resolve(__dirname, 'app/assets/fonts/*')],
+                        from: ['app/assets/fonts/*'],
+                        to: [''],
                     },
-                    watch: true,
-                    minify: true
-                  }),
+                    watch: false
+                }),*/
             ],
             minify: true, // Minify CSS
         });
@@ -68,7 +67,7 @@ const build = async () => {
         // Optionally, you can run Tailwind CSS via the `tailwindcss` CLI directly, if needed.
         // If you're running the build from esbuild directly, you may not need this.
         await runCommand(
-            'tailwindcss -i ./app/assets/builds/tailwind.css -o ./app/assets/builds/application.css',
+            'tailwindcss -i ./app/javascript/styles/tailwind.css -o ./app/assets/builds/application.css',
             'Building Tailwind CSS'
         );
 

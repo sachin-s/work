@@ -1,5 +1,5 @@
 
 <p style="color: green"><%= notice %></p>
 
-<%= content_tag(:div,"", id:"app",data: {controller: "tasks", tasks_map_value: @tasks_map.to_json,
-tasks_new_task_url_value: new_task_path })%>
+<%= content_tag(:div,"", id:"app",data: {controller: "tasks--list-tasks", tasks__list_tasks_map_value: @tasks_map.to_json,
+tasks__list_tasks_new_task_url_value: new_task_path })%>

@@ -12,5 +12,6 @@ Rails.application.config.assets.paths << Rails.root.join("app", "assets", "fonts
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 # Rails.application.config.assets.precompile += %w( .svg .eot .woff .ttf .woff2)
-Rails.application.config.assets.precompile += ["Geist-Regular.ttf"]
-Rails.application.config.assets.paths -= [Rails.root.join('app', 'assets', 'stylesheets')]
+#Rails.application.config.assets.precompile += ["Geist-Regular.ttf"]
+#Rails.application.config.assets.paths -= [Rails.root.join('app', 'assets', 'stylesheets')]
+Rails.application.config.assets.precompile += %w( Geist-Regular.ttf )

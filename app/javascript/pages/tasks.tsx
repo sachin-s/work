@@ -7,10 +7,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./table"
+} from "../components/table"
 
-import {Card,CardHeader, CardContent } from "./card"
-import { Button } from "./button"
+import {Card,CardHeader, CardContent } from "../components/card"
+import { Button } from "../components/button"
 import { Turbo } from "@hotwired/turbo-rails";
 
 function Tasks({tasks, newTaskUrl}) {

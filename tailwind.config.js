@@ -8,7 +8,7 @@ module.exports = {
     './app/helpers/**/*.rb',
     './app/javascript/styles/**/*.css',
     './app/javascript/**/*.js',
-    './app/**/*.{js,sxj}',
+    './app/**/*.{js,jsx}',
     './app/javascript/components/**/*.{js,jsx}',
     './app/**/*.{ts,tsx}',
     './app/javascript/components/**/*.{ts,tsx}',
@@ -64,7 +64,7 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
+        sans: ["Geist, var(--font-geist-sans)", ...fontFamily.sans],
       },
       keyframes: {
         "accordion-down": {

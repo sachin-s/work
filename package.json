@@ -20,6 +20,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cssnano": "^7.0.6",
+    "esbuild-plugin-copy": "^2.1.1",
     "esbuild-postcss": "^0.0.4",
     "esbuild-sass-plugin": "^3.3.1",
     "lucide-react": "^0.453.0",

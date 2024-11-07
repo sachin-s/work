@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 import React from 'react'
 import { createRoot } from 'react-dom/client';
-import Tasks from '../components/tasks'
+import Tasks from '../../pages/tasks'
 
 // Connects to data-controller="tasks"
 export default class extends Controller {

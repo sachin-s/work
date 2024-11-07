@@ -4,5 +4,5 @@
 
 import { application } from "./application"
 
-import TasksController from "./tasks_controller"
-application.register("tasks", TasksController)
+import Tasks__ListTasksController from "./tasks/list_tasks_controller"
+application.register("tasks--list-tasks", Tasks__ListTasksController)
