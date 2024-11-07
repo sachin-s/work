@@ -6,6 +6,7 @@ const cssnano = require('cssnano');
 const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process'); // Added missing exec import
+const copyPlugin = require('esbuild-plugin-copy'); // Plugin to copy assets
 
 // Helper function to execute shell commands
 const runCommand = (command, description) => {
@@ -48,6 +49,10 @@ const build = async () => {
                         autoprefixer(),
                         cssnano(), // Minify CSS
                     ],
+                }),
+                copyPlugin({
+                    src: path.resolve(__dirname, 'app/assets/fonts/*'), // Path to font files
+                    dest: path.resolve(__dirname, 'app/assets/builds/'), // Output folder for fonts
                 }),
             ],
             minify: true, // Minify CSS
