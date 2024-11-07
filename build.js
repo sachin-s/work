@@ -6,7 +6,7 @@ const cssnano = require('cssnano');
 const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process'); // Added missing exec import
-const copyPlugin = require('esbuild-plugin-copy'); // Plugin to copy assets
+const { copy } = require('esbuild-plugin-copy').default; // Plugin to copy assets
 
 // Helper function to execute shell commands
 const runCommand = (command, description) => {
@@ -50,10 +50,17 @@ const build = async () => {
                         cssnano(), // Minify CSS
                     ],
                 }),
-                copyPlugin({
-                    src: path.resolve(__dirname, 'app/assets/fonts/*'), // Path to font files
-                    dest: path.resolve(__dirname, 'app/assets/builds/'), // Output folder for fonts
-                }),
+                copy({
+                    // this is equal to process.cwd(), which means we use cwd path as base path to resolve `to` path
+                    // if not specified, this plugin uses ESBuild.build outdir/outfile options as base path.
+                    resolveFrom: 'cwd',
+                    assets: {
+                      from: [path.resolve(__dirname, 'app/assets/fonts/*')],
+                      to: [path.resolve(__dirname, 'app/assets/builds/')],
+                    },
+                    watch: true,
+                    minify: true
+                  }),
             ],
             minify: true, // Minify CSS
         });
