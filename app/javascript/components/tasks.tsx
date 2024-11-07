@@ -11,15 +11,22 @@ import {
 
 import {Card,CardHeader, CardContent } from "./card"
 import { Button } from "./button"
+import { Turbo } from "@hotwired/turbo-rails";
 
-function Tasks({tasks}) {
+function Tasks({tasks, newTaskUrl}) {
+
+  const handleNewTask = () => {
+    // Use Turbo to navigate to the new task page
+    Turbo.visit(newTaskUrl);
+  };
+
   return (
     <Card className="m-20">
       <CardHeader>
         <div className='flex justify-between'>
           <div>Tasks</div>
           <div>
-            <Button className='mr-3'>New task</Button>
+            <Button className='mr-3'  onClick={handleNewTask}>New task</Button>
             <Button variant="outline">Columns</Button>
           </div>
         </div>  

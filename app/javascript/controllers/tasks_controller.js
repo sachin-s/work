@@ -18,6 +18,6 @@ export default class extends Controller {
         const tasksArray = Object.values(this.mapValue);
 
         //pass the tasks to React Tasks component
-        createRoot(app).render(<Tasks tasks={tasksArray} />); 
+        createRoot(app).render(<Tasks tasks={tasksArray} newTaskUrl={this.newTaskUrlValue} />); 
   }
 }

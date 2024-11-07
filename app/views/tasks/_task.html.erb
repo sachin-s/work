@@ -1,9 +1,9 @@
-<div id="<%= dom_id task %>">
-  <p>
-    <strong>Task:</strong>
-    <%= task.task_id %>
-  </p>
+<div id="<%= dom_id task %>" class="">
 
+  <div class="mb-5">
+    <label for="task_id" class="">Task ID: </label>
+    <input type="text" id="disabled-input" aria-label="disabled input" class="" value="<%= @task.task_id %>" disabled>
+  </div>
   <p>
     <strong>Title:</strong>
     <%= task.title %>

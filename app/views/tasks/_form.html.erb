@@ -13,7 +13,7 @@
 
   <div>
     <%= form.label :task_id, style: "display: block" %>
-    <%= form.text_field :task_id %>
+    <%= form.text_field :task_id, value: @task.task_id, disabled: true  %>
   </div>
 
   <div>

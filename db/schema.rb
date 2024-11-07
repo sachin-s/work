@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_24_071133) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_04_102505) do
+  create_table "labels", force: :cascade do |t|
+    t.string "label"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tasks", force: :cascade do |t|
     t.string "task_id"
     t.string "title"
@@ -18,6 +24,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_24_071133) do
     t.string "priority"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_tasks_on_task_id", unique: true
   end
 
 end
