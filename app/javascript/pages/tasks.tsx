@@ -9,11 +9,19 @@ import {
   TableRow,
 } from "../components/table"
 
-import {Card,CardHeader, CardContent } from "../components/card"
+
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus, faFilter } from '@fortawesome/free-solid-svg-icons'
+
+import { Card, CardHeader, CardContent } from "../components/card"
 import { Button } from "../components/button"
 import { Turbo } from "@hotwired/turbo-rails";
+import { CustomTaskActions } from "../partials/custom-tasks-actions"
+import { format } from 'date-fns';
 
-function Tasks({tasks, newTaskUrl}) {
+
+function Tasks({ tasks, newTaskUrl }) {
 
   const handleNewTask = () => {
     // Use Turbo to navigate to the new task page
@@ -21,39 +29,45 @@ function Tasks({tasks, newTaskUrl}) {
   };
 
   return (
-    <Card className="m-20">
+    <Card className="rounded-md border">
       <CardHeader>
         <div className='flex justify-between'>
-          <div>Tasks</div>
-          <div>
-            <Button className='mr-3'  onClick={handleNewTask}>New task</Button>
-            <Button variant="outline">Columns</Button>
+          <div className="text-2xl font-bold tracking-tight">Tasks</div>
+          <div className="mr-6">
+            <Button variant="outline" className='mr-3'><FontAwesomeIcon icon={faFilter} /></Button>
+            <Button onClick={handleNewTask}><FontAwesomeIcon icon={faPlus} /></Button>
           </div>
-        </div>  
+        </div>
       </CardHeader>
       <CardContent>
-    <Table>
-      <TableCaption>List of tasks.</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[120px]">Task</TableHead>
-          <TableHead>Title</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead className="text-right">Priority</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-          {tasks.map((task) => (
-              <TableRow key={task.task_id}>
-                <TableCell className="font-medium">{task.task_id}</TableCell>
-                <TableCell>{task.title}</TableCell>
+        <Table>
+          <TableCaption className="mb-4 mt-10">List of tasks.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[120px] pl-5">Task</TableHead>
+              <TableHead>Title</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Priority</TableHead>
+              <TableHead>Date created</TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {tasks.map((task) => (
+              <TableRow key={task.task_id} className="border-b">
+                <TableCell className="pl-5">{task.task_id}</TableCell>
+                <TableCell className="font-medium max-w-prose">{task.title}</TableCell>
                 <TableCell>{task.status}</TableCell>
-                <TableCell className="text-right">{task.priority}</TableCell>
+                <TableCell>{task.priority}</TableCell>
+                <TableCell>{format(new Date(task.created_at), 'dd-MMM-yyyy hh:mm a')}</TableCell>
+                <TableCell>
+                  <CustomTaskActions task={task} />
+                </TableCell>
               </TableRow>
             ))}
-      </TableBody>
-    </Table>
-    </CardContent>
+          </TableBody>
+        </Table>
+      </CardContent>
     </Card>
 
   )

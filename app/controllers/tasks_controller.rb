@@ -1,10 +1,21 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :set_task, only: %i[ show edit destroy ]
+  before_action :set_update_task, only: %i[ update ]
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.all
-    @tasks_map = @tasks.select(:task_id, :title, :status, :priority).index_by(&:task_id) # Converts to a hash
+    @tasks = Task.all.order(
+      Arel.sql("CASE WHEN priority = 'High' THEN 1
+                      WHEN priority = 'Medium' THEN 2
+                      WHEN priority = 'Low' THEN 3
+                      ELSE 4 END")
+    )
+    .order(created_at: :desc)
+    @tasks_map = @tasks.select(:task_id, :title, :status, :priority, :created_at).index_by(&:task_id)
+    @tasks_map.each do |key,task|
+      task.created_at = task.created_at.strftime('%d-%b-%Y %I:%M %p')
+    end
+    # Converts to a hash
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -63,6 +74,10 @@ class TasksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_task
       @task = Task.find_by!(task_id: params[:task_id])
+    end
+
+    def set_update_task
+      @task = Task.find_by!(task_id: params[:task][:task_id])
     end
 
     # Only allow a list of trusted parameters through.

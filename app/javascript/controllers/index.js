@@ -4,5 +4,11 @@
 
 import { application } from "./application"
 
+import Tasks__FormTasksController from "./tasks/form_tasks_controller"
+application.register("tasks--form-tasks", Tasks__FormTasksController)
+
 import Tasks__ListTasksController from "./tasks/list_tasks_controller"
 application.register("tasks--list-tasks", Tasks__ListTasksController)
+
+import Utils__HeaderAlertController from "./utils/header_alert_controller"
+application.register("utils--header-alert", Utils__HeaderAlertController)

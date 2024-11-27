@@ -6,7 +6,7 @@ class Task < ApplicationRecord
   private
   
   def to_s
-    "Task ID: #{task_id}, Title: #{title}, Status: #{status}, Priority: #{priority}"
+    "Task ID: #{task_id}, Title: #{title}, Status: #{status}, Priority: #{priority}, Created date: #{created_at}"
   end
 
   def generate_task_id

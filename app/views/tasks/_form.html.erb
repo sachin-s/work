@@ -1,3 +1,4 @@
+<div id="task-form" data-controller="tasks--form-tasks">
 <%= form_with(model: task) do |form| %>
   <% if task.errors.any? %>
     <div style="color: red">
@@ -11,9 +12,10 @@
     </div>
   <% end %>
 
+
   <div>
     <%= form.label :task_id, style: "display: block" %>
-    <%= form.text_field :task_id, value: @task.task_id, disabled: true  %>
+    <%= form.text_field :task_id, value: @task.task_id %>
   </div>
 
   <div>
@@ -35,3 +37,4 @@
     <%= form.submit %>
   </div>
 <% end %>
+</div>

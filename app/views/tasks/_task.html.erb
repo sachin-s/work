@@ -1,22 +1,22 @@
-<div id="<%= dom_id task %>" class="">
+<div id="<%= dom_id task %>" class='container px-6 '>
 
-  <div class="mb-5">
-    <label for="task_id" class="">Task ID: </label>
-    <input type="text" id="disabled-input" aria-label="disabled input" class="" value="<%= @task.task_id %>" disabled>
+  <div class="py-2">
+    <label for="task_id" class=""><strong>Task ID: </strong></label>
+    <input type="text" id="disabled-input" aria-label="disabled input" class="border-0 bg-transparent" value="<%= @task.task_id %>" disabled>
   </div>
-  <p>
-    <strong>Title:</strong>
+  <div  class="py-2">
+    <strong>Task:</strong>
     <%= task.title %>
-  </p>
+  </div>
 
-  <p>
+  <div  class="py-2">
     <strong>Status:</strong>
     <%= task.status %>
-  </p>
+  </div>
 
-  <p>
+  <div class="py-2">
     <strong>Priority:</strong>
     <%= task.priority %>
-  </p>
+  </div>
 
 </div>

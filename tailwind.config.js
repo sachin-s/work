@@ -14,6 +14,7 @@ module.exports = {
     './app/javascript/components/**/*.{ts,tsx}',
     './app/javascript/styles/**/*.scss'
   ],
+  
   theme: {
     container: {
       center: true,
@@ -82,5 +83,9 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"),
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/container-queries'),
+  ],
 }

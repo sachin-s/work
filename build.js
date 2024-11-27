@@ -66,10 +66,10 @@ const build = async () => {
 
         // Optionally, you can run Tailwind CSS via the `tailwindcss` CLI directly, if needed.
         // If you're running the build from esbuild directly, you may not need this.
-        await runCommand(
-            'tailwindcss -i ./app/javascript/styles/tailwind.css -o ./app/assets/builds/application.css',
-            'Building Tailwind CSS'
-        );
+        // await runCommand(
+        //     'tailwindcss -i ./app/javascript/styles/tailwind.css -o ./app/assets/builds/application.css',
+        //     'Building Tailwind CSS'
+        // );
 
         console.log('Build completed successfully!');
     } catch (error) {

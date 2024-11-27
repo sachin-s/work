@@ -1,5 +1,11 @@
 
-<p style="color: green"><%= notice %></p>
+<!--p style="color: green"><%= notice %></p-->
+<div class="m-20">
+<div id="header-alert" data-controller="utils--header-alert" data-utils--header-alert-notice-value="<%= notice %>" class="mb-4">
+  <!-- The React component will be rendered here only if notice has data -->
+  <div data-utils--header-alert-target="notice"></div>
+</div>
 
 <%= content_tag(:div,"", id:"app",data: {controller: "tasks--list-tasks", tasks__list_tasks_map_value: @tasks_map.to_json,
 tasks__list_tasks_new_task_url_value: new_task_path })%>
+</div>

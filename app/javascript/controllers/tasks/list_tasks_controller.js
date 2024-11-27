@@ -3,7 +3,7 @@ import React from 'react'
 import { createRoot } from 'react-dom/client';
 import Tasks from '../../pages/tasks'
 
-// Connects to data-controller="tasks"
+// Connects to data-controller="tasks--list-tasks"
 export default class extends Controller {
 
   static values = { map: Object, newTaskUrl: String };
@@ -11,7 +11,6 @@ export default class extends Controller {
   connect() {
         //this.element.textContent = "Hello World!"
         console.debug("tasks: Hello World!");
-        console.debug(this.newTaskUrlValue);
         const app = document.getElementById('app');
 
         // Convert map to array if necessary
