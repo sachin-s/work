@@ -9,7 +9,7 @@ export default class extends Controller {
     static targets = [ "notice" ]
     connect() {
         //this.element.textContent = "Hello World!"
-        console.debug("header-alert: connected!");
+        console.log('Connected to header alert controller!');
 
         console.log(this.noticeValue)
         if (this.noticeValue && this.noticeValue.trim() !== "")

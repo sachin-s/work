@@ -1,7 +1,60 @@
 class Task < ApplicationRecord
+
+  STATUSLIST = ['backlog', 'todo', 'in_progress', 'done', 'canceled']
+  PRIORITYLIST = ['high', 'medium', 'low']
+
+  # validates_inclusion_of :status, in: STATUSLIST
+  # validates_inclusion_of :priority, in: PRIORITYLIST
+
+
   validates :task_id, uniqueness: true
+  validates :status, presence: true
+  validates :priority, presence: true
+
 
   before_create :generate_task_id
+
+  def self.getStatusDDList
+    sl = STATUSLIST.each_with_object([]) do |str, array|
+      # Create the object with the desired format
+      object = {
+        value: str.downcase,  # Downcase the string for "value"
+        label: str.split('_').map(&:capitalize).join(' ')  # Capitalize each word for "label"
+      }
+      
+      # Add to the array
+      array << object
+    end
+    
+    # Convert the array of objects to JSON
+    return sl.to_json
+  end
+
+  def self.getPriorityDDList
+    pl = PRIORITYLIST.each_with_object([]) do |str, array|
+      # Create the object with the desired format
+      object = {
+        value: str.downcase,  # Downcase the string for "value"
+        label: str.split('_').map(&:capitalize).join(' ')  # Capitalize each word for "label"
+      }
+      
+      # Add to the array
+      array << object
+    end
+          
+    # Convert the array of objects to JSON
+    return pl.to_json
+  end
+
+  def getTaskJson
+    object = {
+      task_id: task_id,
+      title: title,
+      status: status,
+      priority: priority
+    }
+    return object.to_json
+  end
 
   private
   
@@ -27,4 +80,7 @@ class Task < ApplicationRecord
 
     self.task_id = "TASK#{current_month}-#{format('%04d', new_number)}"
   end
+
+
+
 end

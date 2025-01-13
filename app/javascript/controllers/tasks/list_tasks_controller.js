@@ -10,7 +10,7 @@ export default class extends Controller {
 
   connect() {
         //this.element.textContent = "Hello World!"
-        console.debug("tasks: Hello World!");
+        console.log('Connected to task list controller!');
         const app = document.getElementById('app');
 
         // Convert map to array if necessary

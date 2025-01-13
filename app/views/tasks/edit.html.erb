@@ -1,12 +1,10 @@
 <div class="m-20">
-<h1>Editing task</h1>
-
-<%= render "form", task: @task %>
+<%= render "form", task: @task, url: task_path, action: 'patch', task: @task.getTaskJson, priorities: Task.getPriorityDDList, statuses: Task.getStatusDDList %>
 
 <br>
 
 <div>
-  <%= link_to "Show this task", task_path(task_id: @task.task_id) %> |
-  <%= link_to "Back to tasks", tasks_path %>
+  <%#= link_to "Show this task", task_path(task_id: @task.task_id) %> |
+  <%#= link_to "Back to tasks", tasks_path %>
 </div>
 </div>
