@@ -2,7 +2,6 @@ import { Controller } from "@hotwired/stimulus"
 import React from 'react'
 import { createRoot } from 'react-dom/client';
 import { ProfileForm } from "../../pages/task-form";
-import { object } from "zod";
 
 // Connects to data-controller="tasks--form-tasks"
 export default class extends Controller {

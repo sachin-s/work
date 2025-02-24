@@ -9,7 +9,7 @@ import { Button } from "../components/button"
 import { Card, CardHeader, CardContent } from "../components/card"
 import axios from "axios" // Import Axios
 import { Separator } from "../components/separator"
-import { ComboboxPopover } from "../components/custom-drop-down"
+import ComboboxPopover from "../components/custom-drop-down"
 
 import {
     Form,
@@ -20,12 +20,17 @@ import {
     FormLabel,
     FormMessage,
 } from "../components/form"
-import { Input } from "../components/input"
 import { Textarea } from '../components/textarea'
 import { Turbo } from "@hotwired/turbo-rails";
 
+
+// Get the CSRF token from the HTML meta tag
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+axios.defaults.headers['X-CSRF-Token'] = csrfToken;
+
 const formSchema = z.object({
-    taskid: z.string(). min(11, {
+    taskid: z.string().min(11, {
         message: "Task ID must be at least 11 characters.",
     }),
     title: z.string().min(1, {
@@ -39,10 +44,12 @@ const formSchema = z.object({
     }),
 })
 
-  const navigateToTasks = () => {
+const navigateToTasks = () => {
     // Use Turbo to navigate to the new task page
     Turbo.visit('/tasks');
-  };
+};
+
+
 
 interface ProfileFormProps {
     action: "get" | "put" | "patch"; // The action type (GET, PUT, PATCH)
@@ -57,8 +64,8 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
     //console.log('action: ' + action);
     // console.log('url: ' + url);
     // console.log('task:'+ task);
-    console.log('task:'+ JSON.stringify(task));
-    console.log('task_id:'+ task['task_id']);
+    //console.log('task:'+ JSON.stringify(task));
+    //console.log('task_id:'+ task['task_id']);
 
 
 
@@ -67,33 +74,40 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
         resolver: zodResolver(formSchema),
         defaultValues: {
             taskid: task['task_id'],
-            title: "",
-            status: "",
-            priority: "",
+            title: task['title'] || "",
+            status: task['status'],
+            priority: task['priority'],
         },
     })
+    
 
     // 2. Define a submit handler.
     // Define the submit handler with Axios
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
             let response;
-            // console.log('action: ' + action);
-            // console.log('url: ' + url);
-            // console.log('id:'+id);
+            console.log('action: ' + action);
+            console.log('url: ' + url);
+            // console.log('task id:' + values.taskid);
+            // console.log('title:' + values.title);
+            // console.log('status:' + values.status);
+            // console.log('priority:' + values.priority);
+            // console.log('values:' + JSON.stringify(values));
 
-            // Conditionally use Axios based on action (PATCH, PUT, GET)
-            if (action === "patch" || action === "put") {
-                response = await axios[action](`${url}/${values.taskid}`, {
-                    task: {
-                        title: values.title,
-                        status: values.status,
-                        priority: values.priority,
-                    },
-                })
-            } else if (action === "get") {
-                response = await axios.get(`${url}/${values.taskid}`)
-            }
+
+            
+           // Conditionally use Axios based on action (PATCH, PUT, GET)
+           if (action === "patch" || action === "put") {
+               response = await axios[action](`${url}`, {
+                   task: {
+                       title: values.title,
+                       status: values.status,
+                       priority: values.priority,
+                   },
+               })
+           } else if (action === "get") {
+               response = await axios.get(`${url}`)
+           }
 
             // Handle successful response
             console.log("API Response:", response.data)
@@ -126,18 +140,60 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
             <CardHeader><div className="text-2xl font-bold tracking-tight">Task details</div></CardHeader>
             <CardContent>
                 <Form {...form} >
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mb-8">
+                    <form onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-8 mb-8">
 
                         <div className="flex h-10 items-center space-x-10 text-sm">
                             <label className='text-muted-foreground'>Task</label>
                             <span className="font-medium"> {task['task_id']} </span>
 
                             <Separator orientation="vertical" />
-                            <ComboboxPopover label='Status' values={status} placeholder='Set status' />
 
+                            <FormField
+                                control={form.control}
+                                name="status"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        {/* <FormLabel>Title and description</FormLabel> */}
+                                        <FormControl>
+
+                                            <ComboboxPopover label='Status' values={status} placeholder='status' 
+                                            onSelect={(value) => {
+                                            form.setValue('status', value);  // Update the form state with the selected value
+                                            //console.log(JSON.stringify(form.getValues('status')));
+                                             }}
+                                            {...field}/>
+
+                                        </FormControl>
+                                        {/* <FormDescription>
+                                        Task details.
+                                    </FormDescription> */}
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
                             <Separator orientation="vertical" />
-                            <ComboboxPopover label='Priority' values={priority} placeholder='Set priority'  />
+                            <FormField
+                                control={form.control}
+                                name="priority"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        {/* <FormLabel>Title and description</FormLabel> */}
+                                        <FormControl>
+                                            <ComboboxPopover label='Priority' values={priority} placeholder='priority' 
+                                            onSelect={(value) => {
+                                                form.setValue('priority', value);  // Update the form state with the selected value
+                                              }}
+                                            {...field} />
 
+                                        </FormControl>
+                                        {/* <FormDescription>
+                                        Task details.
+                                    </FormDescription> */}
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
                         </div>
 
                         <FormField
@@ -145,7 +201,7 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
                             name="title"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Title and description</FormLabel>
+                                    <p className="text-sm text-muted-foreground">Task</p>
                                     <FormControl>
                                         <Textarea placeholder="Task title and description" {...field} />
                                     </FormControl>
@@ -156,7 +212,7 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
                                 </FormItem>
                             )}
                         />
-                        
+
 
 
                         <Button type="submit" className="mb-4 mr-4">{customLabel}</Button>

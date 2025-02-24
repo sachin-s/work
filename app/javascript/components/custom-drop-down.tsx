@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import React, { forwardRef } from 'react';
 
 import { Button } from "./button"
 import {
@@ -23,36 +23,38 @@ interface Field  {
 }
 
 
-
-export function ComboboxPopover({label, values, placeholder}) {
+const ComboboxPopover = forwardRef((props, ref) => {
+// export function ComboboxPopover(props) {
 
   const getLabelForValue = (value) => {
-    const item = values.find((entry) => entry.value === value);
+    const item = props.values.find((entry) => entry.value === value);
     return item ? item : null; // Returns label or null if not found
   };
 
-  // console.log('label'+ 	label);
-  // console.log('placeholder:'+ 	placeholder);
-  console.log('json:'+ 	JSON.stringify(values));
+  // console.log('props'+JSON.stringify(props))
+  // console.log('value: '+ 	props.value);
+  // console.log('placeholder:'+ 	props.placeholder);
+  //console.log('json:'+ 	JSON.stringify(props.values));
 
-  const Fields: Field[] =values
+  const initialStatus = getLabelForValue(props.value);
+  const Fields: Field[] =props.values
   const [open, setOpen] = React.useState(false)
-  const [selectedStatus, setSelectedStatus] = React.useState<Field | null>(
-    getLabelForValue(getLabelForValue[label.toLowerCase()])
-  )
+  const [selectedStatus, setSelectedStatus] = React.useState<Field | null>
+    (initialStatus)
+
 
   return (
     <div className="flex items-center space-x-4">
-      <p className="text-sm text-muted-foreground">{label}</p>
+      <p className="text-sm text-muted-foreground">{props.label}</p>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button variant="outline" className="w-[150px] justify-start">
-            {selectedStatus ? <>{selectedStatus.label}</> : <>+ Set {label}</>}
+          <Button variant="outline" className="w-[150px] justify-start" ref={ref}>
+            {selectedStatus ? <>{selectedStatus.label}</> : <>+ Set {props.label}</>}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="p-0" side="right" align="start">
           <Command>
-            <CommandInput placeholder="Change {status}..." />
+            <CommandInput placeholder={`Change ${props.placeholder}...` }/>
             <CommandList>
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup>
@@ -64,8 +66,11 @@ export function ComboboxPopover({label, values, placeholder}) {
                       setSelectedStatus(
                         Fields.find((priority) => priority.value === value) ||
                           null
-                      )
-                      setOpen(false)
+                      );
+                      if (props.onSelect) {
+                        props.onSelect(value);  // Call onSelect function passed from the parent
+                      }
+                      setOpen(false);
                     }}
                   >
                     {field.label}
@@ -78,4 +83,5 @@ export function ComboboxPopover({label, values, placeholder}) {
       </Popover>
     </div>
   )
-}
+});
+export default ComboboxPopover;

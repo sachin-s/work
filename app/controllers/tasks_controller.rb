@@ -14,6 +14,9 @@ class TasksController < ApplicationController
     @tasks_map = @tasks.select(:task_id, :title, :status, :priority, :created_at).index_by(&:task_id)
     @tasks_map.each do |key,task|
       task.created_at = task.created_at.strftime('%d-%b-%Y %I:%M %p')
+      task.status = capitalize_and_replace_underscores(task.status)
+      task.priority = capitalize_and_replace_underscores(task.priority)
+
     end
     # Converts to a hash
   end
@@ -77,9 +80,14 @@ class TasksController < ApplicationController
     end
 
     def set_update_task
-      @task = Task.find_by!(task_id: params[:task][:task_id])
+      #binding.pry
+      task_id = params[:task][:task_id].nil? ? params[:task_id] : params[:task][:task_id]
+      @task = Task.find_by!(task_id: task_id)
     end
 
+    def capitalize_and_replace_underscores(str)
+      str.tr('_', ' ').capitalize
+    end
     # Only allow a list of trusted parameters through.
     def task_params
       params.require(:task).permit(:task_id, :title, :status, :priority)

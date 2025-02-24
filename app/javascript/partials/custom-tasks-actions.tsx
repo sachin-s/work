@@ -37,7 +37,8 @@ export function CustomTaskActions({ task }) {
     return (
         <div>
             <DropdownMenu className="text-right">
-                <DropdownMenuTrigger><Button variant="link" size="icon" ><FontAwesomeIcon icon={faEllipsisVertical} /></Button>
+                <DropdownMenuTrigger>
+                        <FontAwesomeIcon className='h-5 w-5 px-2 py-2' icon={faEllipsisVertical} />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
@@ -55,15 +56,19 @@ export function CustomTaskActions({ task }) {
 
             <Drawer>
                 <DrawerTrigger>
-                    <Button variant="link" size="icon" className="ml-2" >
-                        <FontAwesomeIcon icon={faEye} />
-                    </Button>
+                    <span>
+                    {/* <Button variant="link" size="icon" className="ml-2" > */}
+                    <FontAwesomeIcon  className='h-5 w-5 px-2 py-2' icon={faEye} />
+                    {/* </Button> */}
+                    </span>
                 </DrawerTrigger>
                 <DrawerContent>
 
                     <div className="mx-auto w-full max-w-md">
 
                         <DrawerHeader>
+                            <DrawerTitle></DrawerTitle>
+                            <DrawerDescription></DrawerDescription>
                             <div className="items-center justify-items-center mt-8">
 
                                 <div className="space-y-8">
@@ -85,8 +90,10 @@ export function CustomTaskActions({ task }) {
                             </div>
                         </DrawerHeader>
                         <DrawerFooter className="mb-8">
-                            <DrawerClose>
-                                <Button variant="link">Cancel</Button>
+                            <DrawerClose className='text-primary underline-offset-4 hover:font-bold'>
+                                {/* <Button variant="link"> */}
+                                    Cancel
+                                    {/* </Button> */}
                             </DrawerClose>
                         </DrawerFooter>
 

@@ -54,7 +54,7 @@ function Tasks({ tasks, newTaskUrl }) {
           </TableHeader>
           <TableBody>
             {tasks.map((task) => (
-              <TableRow key={task.task_id} className="border-b">
+              <TableRow key={task.task_id} className="border-b p-5">
                 <TableCell className="pl-5">{task.task_id}</TableCell>
                 <TableCell className="font-medium max-w-prose">{task.title}</TableCell>
                 <TableCell>{task.status}</TableCell>
