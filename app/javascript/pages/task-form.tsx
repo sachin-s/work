@@ -1,6 +1,8 @@
 "use client"
 
 import React from 'react'
+import { createRoot } from 'react-dom/client';
+import { CustomAlert } from '../components/custom-alert';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -46,7 +48,8 @@ const formSchema = z.object({
 
 const navigateToTasks = () => {
     // Use Turbo to navigate to the new task page
-    Turbo.visit('/tasks');
+    //Turbo.visit('/tasks');
+    window.location.href = '/tasks';
 };
 
 
@@ -62,7 +65,7 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
     // 1. Define your form.
 
     //console.log('action: ' + action);
-    // console.log('url: ' + url);
+     //console.log('url: ' + url);
     // console.log('task:'+ task);
     //console.log('task:'+ JSON.stringify(task));
     //console.log('task_id:'+ task['task_id']);
@@ -88,29 +91,60 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
             let response;
             console.log('action: ' + action);
             console.log('url: ' + url);
+            console.log('action_cond1: ' + (action === "patch" || action === "put"));
+            console.log('action_cond2: ' + (action === "get"));
             // console.log('task id:' + values.taskid);
             // console.log('title:' + values.title);
             // console.log('status:' + values.status);
             // console.log('priority:' + values.priority);
             // console.log('values:' + JSON.stringify(values));
-
+            const options = {
+                method: action.toUpperCase(),
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json;charset=UTF-8",
+                  'X-CSRF-Token': csrfToken,
+                },
+                body: JSON.stringify({
+                    task: {
+                        title: values.title,
+                        status: values.status,
+                        priority: values.priority,
+                    },
+                }),
+              };
 
             
            // Conditionally use Axios based on action (PATCH, PUT, GET)
            if (action === "patch" || action === "put") {
-               response = await axios[action](`${url}`, {
-                   task: {
-                       title: values.title,
-                       status: values.status,
-                       priority: values.priority,
-                   },
-               })
+               //console.log('action:',action)
+
+                response =  await fetch(url, options).then((response) => {
+                    // And we'll do some fancy stuff there.
+                    console.log("API Response:", response.data);
+                    const alertDiv = document.querySelector('[data-utils--header-alert-target="notice"]');
+                    createRoot(alertDiv).render(<CustomAlert title='Notification' description="Your task has been successfully updated!" />);
+                    setTimeout(() => {
+                        // Remove or hide the alert (depending on your desired effect)
+                        alertDiv.innerHTML = '';  // Remove the rendered alert from the DOM
+                        // OR, if you prefer to hide it instead of removing:
+                        // root.style.display = 'none'; // This hides the alert (make sure your alert can be re-shown)
+                    }, 10000);
+                });
+               //Turbo.turbo_stream.update(values.taskid, options);
            } else if (action === "get") {
-               response = await axios.get(`${url}`)
+            console.log('executed2');
+            console.log('action:',action)
+            response =  await fetch(url, options).then((response) => {
+                // And we'll do some fancy stuff there.
+                console.log("API Response:", response.data);
+                const alertDiv = document.querySelector('[data-utils--header-alert-target="notice"]');
+                alertDiv.textContent = "Your task has been successfully created!";
+              });
            }
 
             // Handle successful response
-            console.log("API Response:", response.data)
+            //console.log("API Response:", response.data)
             // Optionally, you can handle some success state here, like showing a success message.
         } catch (error) {
             // Handle error
@@ -140,8 +174,7 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
             <CardHeader><div className="text-2xl font-bold tracking-tight">Task details</div></CardHeader>
             <CardContent>
                 <Form {...form} >
-                    <form onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-8 mb-8">
+                    <form className="space-y-8 mb-8">
 
                         <div className="flex h-10 items-center space-x-10 text-sm">
                             <label className='text-muted-foreground'>Task</label>
@@ -215,12 +248,18 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
 
 
 
-                        <Button type="submit" className="mb-4 mr-4">{customLabel}</Button>
+                        <Button onClick={(e)=>{
+                        e.preventDefault();
+                        onSubmit(form.getValues());
+                    }}
+                        className="mb-4 mr-4">{customLabel}</Button>
                         <Button variant="outline" onClick={navigateToTasks}>Back to tasks</Button>
 
                     </form>
                 </Form>
             </CardContent>
+
+
         </Card>
     )
 }

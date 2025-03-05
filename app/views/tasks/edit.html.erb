@@ -1,4 +1,10 @@
 <div class="m-20">
+
+  <div id="header-alert" data-controller="utils--header-alert" data-utils--header-alert-notice-value="<%= notice %>" class="mb-4 m-20">
+    <!-- The React component will be rendered here only if notice has data -->
+    <div data-utils--header-alert-target="notice"></div>
+  </div>
+
 <%= render "form", task: @task, url: task_path, action: 'patch', task: @task.getTaskJson, priorities: Task.getPriorityDDList, statuses: Task.getStatusDDList %>
 
 <br>
