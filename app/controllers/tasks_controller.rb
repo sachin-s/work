@@ -33,6 +33,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/1/edit
   def edit
+    @notice = params[:notice]
   end
 
   # POST /tasks or /tasks.json
@@ -41,7 +42,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
-        format.html { redirect_to task_path(task_id: @task.task_id), notice: "Task was successfully created." }
+        format.html { redirect_to edit_task_path(task_id: @task.task_id), notice: "Task was successfully created." }
         format.json { render :show, status: :created, location: @task }
       else
         format.html { render :new, status: :unprocessable_entity }

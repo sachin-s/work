@@ -55,7 +55,7 @@ const navigateToTasks = () => {
 
 
 interface ProfileFormProps {
-    action: "get" | "put" | "patch"; // The action type (GET, PUT, PATCH)
+    action: "get" | "put" | "patch" | "new"; // The action type (GET, PUT, PATCH)
     url: string; // The URL for the API request
     task: string;
     priority: object;
@@ -80,7 +80,10 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
         try {
             let response;
             //console.log('action: ' + action);
-
+            if (action === "create") 
+                {
+                    action="POST";
+                }
             const options = {
                 method: action.toUpperCase(),
                 headers: {
@@ -93,6 +96,7 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
                         title: values.title,
                         status: values.status,
                         priority: values.priority,
+                        task_id: values.taskid
                     },
                 }),
               };
@@ -100,28 +104,38 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
             
            // Conditionally use fetch based on action (PATCH, PUT, GET)
            if (action === "patch" || action === "put") {
-               //console.log('action:',action)
+            //    console.log('action:',action)
+            //    console.log('url:',url)
+            //    console.log(JSON.stringify(options));
 
                 response =  await fetch(url, options).then((response) => {
                     // And we'll do some fancy stuff there.
-                    console.log("API Response:", response.data);
-                    const alertDiv = document.querySelector('[data-utils--header-alert-target="notice"]');
+                    //console.log("API Response:", response.data);
+                    const alertDiv = document.querySelector('[data-controller="utils--header-alert"');
                     createRoot(alertDiv).render(<CustomAlert title='Notification' description="Your task has been successfully updated!" />);
                     setTimeout(() => {
                         alertDiv.innerHTML = '';  // Remove the rendered alert from the DOM
                     }, 10000);
                 });
                //Turbo.turbo_stream.update(values.taskid, options);
-           } else if (action === "get") {
-            console.log('executed2');
-            console.log('action:',action)
+           } else //if (action === "get") 
+            {
+                
+                // console.log('action:',action)
+                // console.log('url:',url)
+                // console.log(JSON.stringify(options));
             response =  await fetch(url, options).then((response) => {
                 // And we'll do some fancy stuff there.
-                console.log("API Response:", response.data);
-                const alertDiv = document.querySelector('[data-utils--header-alert-target="notice"]');
-                alertDiv.textContent = "Your task has been successfully created!";
-              });
-           }
+                //console.log("API Response:", response.data);
+                //const alertDiv = document.querySelector('[data-utils--header-alert-target="notice"]');
+                // createRoot(alertDiv).render(<CustomAlert title='Notification' description="Your task has been successfully created!" />);
+                // setTimeout(() => {
+                //     alertDiv.innerHTML = '';  // Remove the rendered alert from the DOM
+                // }, 10000);
+                const editUrl = `/tasks/${values.taskid}/edit`; // Construct the edit URL
+                Turbo.visit(editUrl);
+            });
+        }
 
             // Handle successful response
             //console.log("API Response:", response.data)
