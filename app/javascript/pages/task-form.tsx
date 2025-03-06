@@ -16,10 +16,10 @@ import ComboboxPopover from "../components/custom-drop-down"
 import {
     Form,
     FormControl,
-    FormDescription,
+    //FormDescription,
     FormField,
     FormItem,
-    FormLabel,
+   // FormLabel,
     FormMessage,
 } from "../components/form"
 import { Textarea } from '../components/textarea'
@@ -62,16 +62,7 @@ interface ProfileFormProps {
     status: object;
 }
 export function ProfileForm({ action, url, task, priority, status }: ProfileFormProps) {
-    // 1. Define your form.
-
-    //console.log('action: ' + action);
-     //console.log('url: ' + url);
-    // console.log('task:'+ task);
-    //console.log('task:'+ JSON.stringify(task));
-    //console.log('task_id:'+ task['task_id']);
-
-
-
+    // 1. Defining the form.
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -84,20 +75,12 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
     })
     
 
-    // 2. Define a submit handler.
-    // Define the submit handler with Axios
+    // 2. Defining the submit handler.
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
             let response;
-            console.log('action: ' + action);
-            console.log('url: ' + url);
-            console.log('action_cond1: ' + (action === "patch" || action === "put"));
-            console.log('action_cond2: ' + (action === "get"));
-            // console.log('task id:' + values.taskid);
-            // console.log('title:' + values.title);
-            // console.log('status:' + values.status);
-            // console.log('priority:' + values.priority);
-            // console.log('values:' + JSON.stringify(values));
+            //console.log('action: ' + action);
+
             const options = {
                 method: action.toUpperCase(),
                 headers: {
@@ -115,7 +98,7 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
               };
 
             
-           // Conditionally use Axios based on action (PATCH, PUT, GET)
+           // Conditionally use fetch based on action (PATCH, PUT, GET)
            if (action === "patch" || action === "put") {
                //console.log('action:',action)
 
@@ -125,10 +108,7 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
                     const alertDiv = document.querySelector('[data-utils--header-alert-target="notice"]');
                     createRoot(alertDiv).render(<CustomAlert title='Notification' description="Your task has been successfully updated!" />);
                     setTimeout(() => {
-                        // Remove or hide the alert (depending on your desired effect)
                         alertDiv.innerHTML = '';  // Remove the rendered alert from the DOM
-                        // OR, if you prefer to hide it instead of removing:
-                        // root.style.display = 'none'; // This hides the alert (make sure your alert can be re-shown)
                     }, 10000);
                 });
                //Turbo.turbo_stream.update(values.taskid, options);
@@ -145,15 +125,9 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
 
             // Handle successful response
             //console.log("API Response:", response.data)
-            // Optionally, you can handle some success state here, like showing a success message.
         } catch (error) {
             // Handle error
-            if (axios.isAxiosError(error)) {
-                console.error("Error:", error.response?.data || error.message)
-                // Optionally, handle error state (e.g., showing an error message).
-            } else {
                 console.error("Unexpected error:", error)
-            }
         }
     }
 
