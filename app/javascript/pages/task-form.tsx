@@ -9,7 +9,7 @@ import { z } from "zod"
 
 import { Button } from "../components/button"
 import { Card, CardHeader, CardContent } from "../components/card"
-import axios from "axios" // Import Axios
+//import axios from "axios" // Import Axios
 import { Separator } from "../components/separator"
 import ComboboxPopover from "../components/custom-drop-down"
 
@@ -29,7 +29,7 @@ import { Turbo } from "@hotwired/turbo-rails";
 // Get the CSRF token from the HTML meta tag
 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-axios.defaults.headers['X-CSRF-Token'] = csrfToken;
+//axios.defaults.headers['X-CSRF-Token'] = csrfToken;
 
 const formSchema = z.object({
     taskid: z.string().min(11, {
@@ -76,10 +76,11 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
     
 
     // 2. Defining the submit handler.
-    async function onSubmit(values: z.infer<typeof formSchema>) {
+    async function yourSubmitFunction(values: z.infer<typeof formSchema>) {
         try {
             let response;
-            //console.log('action: ' + action);
+            console.log('action: ' + action);
+            console.log('values: '+ JSON.stringify(values));
             if (action === "create") 
                 {
                     action="POST";
@@ -162,7 +163,7 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
             <CardHeader><div className="text-2xl font-bold tracking-tight">Task details</div></CardHeader>
             <CardContent>
                 <Form {...form} >
-                    <form className="space-y-8 mb-8">
+                    <form className="space-y-8 mb-8" onSubmit={form.handleSubmit(yourSubmitFunction)}>
 
                         <div className="flex h-10 items-center space-x-10 text-sm">
                             <label className='text-muted-foreground'>Task</label>
@@ -236,10 +237,10 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
 
 
 
-                        <Button onClick={(e)=>{
-                        e.preventDefault();
-                        onSubmit(form.getValues());
-                    }}
+                        <Button type="submit"
+                    //     onClick={(e)=>{
+                    //     onSubmit(form.getValues());
+                    // }}
                         className="mb-4 mr-4">{customLabel}</Button>
                         <Button variant="outline" onClick={navigateToTasks}>Back to tasks</Button>
 

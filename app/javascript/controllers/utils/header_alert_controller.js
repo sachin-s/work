@@ -14,7 +14,7 @@ export default class extends Controller {
         if (this.noticeValue && this.noticeValue.trim() !== "")
         {
           const root = document.getElementById('header-alert');
-          createRoot(root).render(<CustomAlert title='Notification' description={displayMessage} />);    
+          createRoot(root).render(<CustomAlert title='Notification' description={this.noticeValue} />);    
           setTimeout(() => {
             // Remove or hide the alert (depending on your desired effect)
             root.innerHTML = '';  // Remove the rendered alert from the DOM
