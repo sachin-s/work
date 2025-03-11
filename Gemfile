@@ -22,6 +22,9 @@ gem "turbo-rails"
 
 gem 'sass-rails'
 
+# adding support library for handing csv files
+gem 'csv'
+
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
 
