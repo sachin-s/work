@@ -4,13 +4,14 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.all.order(
-      Arel.sql("CASE WHEN priority = 'High' THEN 1
-                      WHEN priority = 'Medium' THEN 2
-                      WHEN priority = 'Low' THEN 3
-                      ELSE 4 END")
-    )
-    .order(created_at: :desc)
+    @tasks = allTasksFilter()
+    # Task.all.order(
+    #   Arel.sql("CASE WHEN priority = 'High' THEN 1
+    #                   WHEN priority = 'Medium' THEN 2
+    #                   WHEN priority = 'Low' THEN 3
+    #                   ELSE 4 END")
+    # )
+    # .order(created_at: :desc)
     @tasks_map = @tasks.select(:task_id, :title, :status, :priority, :created_at).index_by(&:task_id)
     @tasks_map.each do |key,task|
       task.created_at = task.created_at.strftime('%d-%b-%Y %I:%M %p')
@@ -19,6 +20,37 @@ class TasksController < ApplicationController
 
     end
     # Converts to a hash
+  end
+
+  def allTasksFilter
+    @tasks = Task.all.order(
+      Arel.sql("CASE WHEN priority = 'High' THEN 1
+                      WHEN priority = 'Medium' THEN 2
+                      WHEN priority = 'Low' THEN 3
+                      ELSE 4 END")
+    )
+    .order(created_at: :desc)
+    @tasks
+  end
+
+  def export_tasks
+    @tasks = allTasksFilter()
+    @tasks_map = @tasks.select(:task_id, :title, :status, :priority, :created_at).index_by(&:task_id)
+    # binding.pry
+
+    response.headers['Content-Type'] = 'text/csv; charset=utf-8'
+    response.headers['Content-Disposition'] = "attachment; filename=tasks_export.csv"
+
+    csv_string = CSV.generate do |csv|
+      csv << ["Task ID", "Title", "Status", "Priority", "Created At"]  # Header row
+      @tasks.each do |task|
+        csv << [task.task_id, task.title, task.status, task.priority, task.created_at]
+      end
+    end
+  
+    # Send the generated CSV data as a file download
+    render plain: csv_string
+
   end
 
   # GET /tasks/1 or /tasks/1.json

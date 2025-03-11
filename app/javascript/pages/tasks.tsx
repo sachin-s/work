@@ -12,7 +12,7 @@ import {
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faFilter } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faFilter, faDownload } from '@fortawesome/free-solid-svg-icons'
 
 import { Card, CardHeader, CardContent } from "../components/card"
 import { Button } from "../components/button"
@@ -27,7 +27,10 @@ function Tasks({ tasks, newTaskUrl }) {
     // Use Turbo to navigate to the new task page
     Turbo.visit(newTaskUrl);
   };
-
+  const handleDownload = () => {
+    // Use Turbo to navigate to the new task page
+    Turbo.visit('/export_tasks');
+  };
   return (
     <Card className="rounded-md border">
       <CardHeader>
@@ -35,6 +38,7 @@ function Tasks({ tasks, newTaskUrl }) {
           <div className="text-2xl font-bold tracking-tight">Tasks</div>
           <div className="mr-6">
             <Button variant="outline" className='mr-3'><FontAwesomeIcon icon={faFilter} /></Button>
+            <Button variant="outline" className='mr-3' onClick={handleDownload}><FontAwesomeIcon icon={faDownload} /></Button>
             <Button onClick={handleNewTask}><FontAwesomeIcon icon={faPlus} /></Button>
           </div>
         </div>
