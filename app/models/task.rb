@@ -56,6 +56,11 @@ class Task < ApplicationRecord
     return object.to_json
   end
 
+  def archiveTask
+    self.status = 'archived'
+    self.save!   
+  end
+
   private
   
   def to_s
@@ -80,7 +85,5 @@ class Task < ApplicationRecord
 
     self.task_id = "TASK#{current_month}-#{format('%04d', new_number)}"
   end
-
-
 
 end

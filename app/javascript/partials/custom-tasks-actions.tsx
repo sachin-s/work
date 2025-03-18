@@ -33,6 +33,10 @@ export function CustomTaskActions({ task }) {
         // Use Turbo to navigate to the new task page
         Turbo.visit('/tasks/' + task.task_id + '/edit');
     };
+    const handleArchiveTask = () => {
+        // Use Turbo to navigate to the new task page
+        Turbo.visit('/tasks/' + task.task_id + '/archive');
+    };
 
     return (
         <div>
@@ -46,8 +50,8 @@ export function CustomTaskActions({ task }) {
                     <DropdownMenuItem>
                         <a href={'/tasks/' + task.task_id} data-turbo-method="delete"><FontAwesomeIcon icon={faTrashCan} className='mr-3' /> Delete</a>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                    <FontAwesomeIcon icon={faArchive} className='mr-3' /> <span className="font-normal">Archive</span>
+                    <DropdownMenuItem onClick={handleArchiveTask} className={task.status === 'Archived' ? 'hidden' : ''}>
+                        <FontAwesomeIcon icon={faArchive} className='mr-3' /> <span className="font-normal">Archive</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={handleEditTask}>
                         <FontAwesomeIcon icon={faPen} className='mr-3' /> <span className="font-normal">Edit</span>

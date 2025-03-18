@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[ show edit destroy ]
+  before_action :set_task, only: %i[ show edit destroy archive ]
   before_action :set_update_task, only: %i[ update ]
 
   # GET /tasks or /tasks.json
@@ -20,6 +20,15 @@ class TasksController < ApplicationController
 
     end
     # Converts to a hash
+  end
+
+  def archive
+    @task.archiveTask
+
+    respond_to do |format|
+      format.html { redirect_to tasks_path, status: :see_other, notice: "Task was successfully archived." }
+      format.json { head :no_content }
+    end    
   end
 
   def allTasksFilter

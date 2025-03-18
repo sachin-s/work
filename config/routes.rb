@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   resources :labels
-  resources :tasks, param: :task_id
+  resources :tasks, param: :task_id do
+    member do
+      get :archive  # or post, depending on your use case
+    end
+  end
 
   get '/export_tasks', to: 'tasks#export_tasks', defaults: { format: 'csv' }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
