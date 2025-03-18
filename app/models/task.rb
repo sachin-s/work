@@ -1,6 +1,6 @@
 class Task < ApplicationRecord
 
-  STATUSLIST = ['backlog', 'todo', 'in_progress', 'done', 'canceled']
+  STATUSLIST = ['backlog', 'todo', 'in_progress', 'done', 'canceled','archived']
   PRIORITYLIST = ['high', 'medium', 'low']
 
   # validates_inclusion_of :status, in: STATUSLIST
