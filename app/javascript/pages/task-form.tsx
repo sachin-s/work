@@ -46,10 +46,10 @@ const formSchema = z.object({
     }),
 })
 
-const navigateToTasks = () => {
+const navigateToTasks = (e) => {
     // Use Turbo to navigate to the new task page
-    //Turbo.visit('/tasks');
-    window.location.href = '/tasks';
+    e.preventDefault();
+    Turbo.visit('/tasks');
 };
 
 
@@ -244,7 +244,9 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
                         className="mb-4 mr-4">{customLabel}</Button>
                         <Button variant="outline" onClick={navigateToTasks}>Back to tasks</Button>
 
+
                     </form>
+
                 </Form>
             </CardContent>
 

@@ -24,7 +24,7 @@ import { Button } from "../components/button"
 import { Separator } from "../components/separator"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEllipsisVertical, faEye, faTrashCan, faPen } from '@fortawesome/free-solid-svg-icons'
+import { faEllipsisVertical, faEye, faTrashCan, faPen, faArchive } from '@fortawesome/free-solid-svg-icons'
 
 
 export function CustomTaskActions({ task }) {
@@ -45,6 +45,9 @@ export function CustomTaskActions({ task }) {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>
                         <a href={'/tasks/' + task.task_id} data-turbo-method="delete"><FontAwesomeIcon icon={faTrashCan} className='mr-3' /> Delete</a>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                    <FontAwesomeIcon icon={faArchive} className='mr-3' /> <span className="font-normal">Archive</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={handleEditTask}>
                         <FontAwesomeIcon icon={faPen} className='mr-3' /> <span className="font-normal">Edit</span>
