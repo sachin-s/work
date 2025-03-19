@@ -37,7 +37,7 @@ function Tasks({ tasks, newTaskUrl }) {
         <div className='flex justify-between'>
           <div className="text-2xl font-bold tracking-tight">Tasks</div>
           <div className="mr-6">
-            <Button variant="outline" className='mr-3'><FontAwesomeIcon icon={faFilter} /></Button>
+            <Button variant="outline" className='mr-3 hidden'><FontAwesomeIcon icon={faFilter} /></Button>
             <Button variant="outline" className='mr-3' onClick={handleDownload}><FontAwesomeIcon icon={faDownload} /></Button>
             <Button onClick={handleNewTask}><FontAwesomeIcon icon={faPlus} /></Button>
           </div>
@@ -58,9 +58,9 @@ function Tasks({ tasks, newTaskUrl }) {
           </TableHeader>
           <TableBody>
             {tasks.map((task) => (
-              <TableRow key={task.task_id} className={`border-b p-5 ${task.status === 'Archived' ? 'line-through' : ''}`}>
+              <TableRow key={task.task_id} className={`border-b ${task.status === 'Archived' ? 'line-through' : ''}`}>
                 <TableCell className="pl-5">{task.task_id}</TableCell>
-                <TableCell className="font-medium max-w-prose">{task.title}</TableCell>
+                <TableCell className="font-medium max-w-prose truncate whitespace-nowrap">{task.title}</TableCell>
                 <TableCell>{task.status}</TableCell>
                 <TableCell>{task.priority}</TableCell>
                 <TableCell>{format(new Date(task.created_at), 'dd-MMM-yyyy hh:mm a')}</TableCell>

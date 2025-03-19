@@ -81,7 +81,7 @@ export function CustomTaskActions({ task }) {
                                 <div className="space-y-8">
                                     <h4 className="text-sm text-muted-foreground leading-none text-center">Task details</h4>
                                     <Separator className="my-8" />
-                                    <p className="text-sm font-medium">
+                                    <p className="text-sm font-medium whitespace-pre-wrap max-h-[180px] overflow-y-scroll">
                                         {task.title}
                                     </p>
                                 </div>
