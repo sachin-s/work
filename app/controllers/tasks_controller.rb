@@ -1,10 +1,13 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit destroy archive ]
   before_action :set_update_task, only: %i[ update ]
+  include Pagy::Backend
+
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = allTasksFilter()
+    # @tasks = allTasksFilter()
+    @pagy, @tasks = pagy(allTasksFilter())
     # Task.all.order(
     #   Arel.sql("CASE WHEN priority = 'High' THEN 1
     #                   WHEN priority = 'Medium' THEN 2
@@ -12,11 +15,17 @@ class TasksController < ApplicationController
     #                   ELSE 4 END")
     # )
     # .order(created_at: :desc)
+    #binding.pry
     @tasks_map = @tasks.select(:task_id, :title, :status, :priority, :created_at).index_by(&:task_id)
+    print('pagy.prev: ',@pagy.prev)
+    print('pagy.page: ',@pagy.page)
+    print('pagy.next: ',@pagy.next)
+    print('pagy.last: ',@pagy.last)
     @tasks_map.each do |key,task|
       task.created_at = task.created_at.strftime('%d-%b-%Y %I:%M %p')
       task.status = capitalize_and_replace_underscores(task.status)
       task.priority = capitalize_and_replace_underscores(task.priority)
+    #binding.pry
 
     end
     # Converts to a hash

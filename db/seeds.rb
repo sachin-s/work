@@ -17,7 +17,7 @@ tasks = [ {:task_id=>"TASK-8782", :title=>"You can't compress the program withou
      {:task_id=>"TASK-1138", :title=>"Generating the driver won't do anything, we need to quantify the 1080p SMTP bandwidth!", :status=>"in_progress", :priority=>"medium"},
      {:task_id=>"TASK-7184", :title=>"We need to program the back-end THX pixel!", :status=>"todo", :priority=>"low"}]
 
-Task.destroy_all
-p "Destroyed all tasks in DB"
+# Task.destroy_all
+# p "Destroyed all tasks in DB"
 Task.create!(tasks)
 p "Created #{Task.count} tasks in db"

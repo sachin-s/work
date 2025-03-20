@@ -9,8 +9,6 @@ import {
   TableRow,
 } from "../components/table"
 
-
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faFilter, faDownload } from '@fortawesome/free-solid-svg-icons'
 
@@ -19,9 +17,10 @@ import { Button } from "../components/button"
 import { Turbo } from "@hotwired/turbo-rails";
 import { CustomTaskActions } from "../partials/custom-tasks-actions"
 import { format } from 'date-fns';
+import { CustomPagination } from '../partials/custom-pagination'
 
 
-function Tasks({ tasks, newTaskUrl }) {
+function Tasks({ tasks, newTaskUrl, page, nextp, prevp, lastp }) {
 
   const handleNewTask = () => {
     // Use Turbo to navigate to the new task page
@@ -32,6 +31,7 @@ function Tasks({ tasks, newTaskUrl }) {
     Turbo.visit('/export_tasks');
   };
   return (
+  <div>
     <Card className="rounded-md border">
       <CardHeader>
         <div className='flex justify-between'>
@@ -72,7 +72,11 @@ function Tasks({ tasks, newTaskUrl }) {
           </TableBody>
         </Table>
       </CardContent>
+
     </Card>
+
+    <CustomPagination page={page} next={nextp} prev={prevp} last={lastp} />
+  </div>
 
   )
 }
