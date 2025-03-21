@@ -25,7 +25,7 @@ export function CustomPagination({ page, next, prev, last }) {
                 <PaginationItem className={prevClassNameHidden} >
                     <PaginationEllipsis />
                 </PaginationItem>
-                <PaginationItem>
+                <PaginationItem className={prevClassNameHiddenButton}>
                     <PaginationLink  href={`/tasks?page=${prev}`}>{prev}</PaginationLink>
                 </PaginationItem>
                 <PaginationItem>
@@ -33,7 +33,7 @@ export function CustomPagination({ page, next, prev, last }) {
                         {page}
                     </PaginationLink>
                 </PaginationItem>
-                <PaginationItem>
+                <PaginationItem className={nextClassNameHiddenButton}>
                     <PaginationLink href={`/tasks?page=${next}`}>{next}</PaginationLink>
                 </PaginationItem>
                 <PaginationItem className={nextClassNameHidden} >
