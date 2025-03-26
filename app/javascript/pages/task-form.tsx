@@ -225,7 +225,7 @@ export function ProfileForm({ action, url, task, priority, status }: ProfileForm
                                 <FormItem>
                                     <p className="text-sm text-muted-foreground">Task</p>
                                     <FormControl>
-                                        <Textarea rows="15" placeholder="Task title and description" {...field} />
+                                        <Textarea rows="12" placeholder="Task title and description" {...field} />
                                     </FormControl>
                                     {/* <FormDescription>
                                         Task details.
