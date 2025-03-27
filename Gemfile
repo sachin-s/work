@@ -31,6 +31,7 @@ gem 'ransack'
 
 gem 'pagy'
 
+gem 'rainbow'
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem "stimulus-rails"
 

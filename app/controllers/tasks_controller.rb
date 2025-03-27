@@ -47,6 +47,7 @@ class TasksController < ApplicationController
       @tasks.each do |task|
         csv << [task.task_id, task.title, task.status, task.priority, task.created_at]
       end
+    Rails.logger.info(Rainbow('Tasks data exported successfully').green)
     end
   
     # Send the generated CSV data as a file download
@@ -82,6 +83,8 @@ class TasksController < ApplicationController
         format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
+
+    Rails.logger.info(Rainbow('Task created successfully').green)
   end
 
   # PATCH/PUT /tasks/1 or /tasks/1.json
@@ -95,6 +98,8 @@ class TasksController < ApplicationController
         format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
+
+    Rails.logger.info(Rainbow('Task updated successfully').green)
   end
 
   # DELETE /tasks/1 or /tasks/1.json
@@ -105,6 +110,8 @@ class TasksController < ApplicationController
       format.html { redirect_to tasks_path, status: :see_other, notice: "Task was successfully destroyed." }
       format.json { head :no_content }
     end
+
+    Rails.logger.info(Rainbow('Task deleted successfully').green)
   end
 
   private
