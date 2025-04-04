@@ -76,6 +76,7 @@ function Tasks({ tasks, newTaskUrl, page, nextp, prevp, lastp }) {
     </Card>
 
     <CustomPagination page={page} next={nextp} prev={prevp} last={lastp} />
+
   </div>
 
   )

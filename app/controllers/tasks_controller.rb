@@ -26,9 +26,10 @@ class TasksController < ApplicationController
 
   def allTasksFilter
     @tasks = Task.all.order(
-      Arel.sql("CASE WHEN priority = 'High' THEN 1
-                      WHEN priority = 'Medium' THEN 2
-                      WHEN priority = 'Low' THEN 3
+      Arel.sql("CASE  WHEN status = 'archived' THEN 99
+                      WHEN priority = 'high' THEN 1
+                      WHEN priority = 'medium' THEN 2
+                      WHEN priority = 'low' THEN 3
                       ELSE 4 END")
     )
     .order(created_at: :desc)

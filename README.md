@@ -7,19 +7,30 @@ Things you may want to cover:
 
 * Ruby version
 
+    ruby "3.2.3"
+
 * System dependencies
 
 * Configuration
 
 * Database creation
 
+    Update the DB connection details in config/database.yml
+    `rails db:create`
+
 * Database initialization
 
+    `rails db:seed`
+
 * How to run the test suite
+
+    `rails test:system`
 
 * Services (job queues, cache servers, search engines, etc.)
 
 * Deployment instructions
+
+    `rails s`
 
 * Re-build of project instructions:
 
