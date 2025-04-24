@@ -20,7 +20,7 @@ import {
     DrawerTrigger,
 } from "../components/drawer"
 
-import { Button } from "../components/button"
+import { Turbo } from "@hotwired/turbo-rails";
 import { Separator } from "../components/separator"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
